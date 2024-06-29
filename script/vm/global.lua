@@ -336,6 +336,19 @@ local compilerGlobalSwitch = util.switch()
                 end
             end
         end
+
+        -- allow fields defined under `---@class _G` to be declared as global
+        if name == "_G" and source.fields then
+            for _, field in ipairs(source.fields) do
+                local fieldName = guide.getKeyName(field)
+                if fieldName then
+                    local fieldUri = guide.getUri(field)
+                    local global = vm.declareGlobal('variable', fieldName, fieldUri)
+                    global:addSet(fieldUri, field)
+                    field._globalNode = global
+                end
+            end
+        end
     end)
     : case 'doc.alias'
     : call(function (source)
