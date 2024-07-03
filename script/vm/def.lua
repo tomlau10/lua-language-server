@@ -59,6 +59,11 @@ end
 ---@param source parser.object
 ---@return       parser.object[]
 function vm.getDefs(source)
+    local cache = vm.getCache 'vm.getDefs:result'
+    if cache[source] then
+        return cache[source]
+    end
+
     local results = {}
     local mark    = {}
 
@@ -90,6 +95,8 @@ function vm.getDefs(source)
     vm.compileByNodeChain(source, pushResult)
     searchByNode(source, pushResult)
 
+    cache[source] = results
+
     return results
 end
 
@@ -101,6 +108,11 @@ end
 
 ---@param source parser.object
 function vm.hasDef(source)
+    local cache = vm.getCache 'vm.getDefs:result'
+    if cache[source] then
+        return #cache[source] > 0
+    end
+
     local mark = {}
     local hasLocal
     local function pushResult(src)

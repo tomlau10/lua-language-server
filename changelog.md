@@ -6,7 +6,8 @@
 * `FIX` `diagnostics.severity` defaulting to "Warning" when run using `--check` [#2730](https://github.com/LuaLS/lua-language-server/issues/2730)
 * `NEW` Add support for lambda style functions, `|paramList| expr` is syntactic sugar for `function(paramList) return expr end` 
 * `FIX` Respect `completion.showParams` config for local function completion 
-* `CHG` Improve performance of multithreaded `--check` and `undefined-field` diagnostic
+* `CHG` Improve performance of multithreaded `--check`
+* `CHG` Improve performance of `undefined-field` and `invisble` diagnostic
 
 ## 3.9.3
 `2024-6-11`
